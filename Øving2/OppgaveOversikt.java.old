@@ -1,0 +1,83 @@
+class OppgaveOversikt{
+	private Student[] studenter = new Student[5];
+	private int antStud = 0;
+
+	public boolean regNyStudent(String navn){
+		for (Student s:this.studenter){
+			if (s!=null){
+				if (s.getNavn().equals(navn)){
+					return false;
+				}
+			}
+		}
+		if (this.antStud>=this.studenter.length){
+			this.incrementBy5();
+		}
+		studenter[antStud] = new Student(navn);
+		antStud++;
+		return true;
+	}
+
+	public int finnAntStud(){
+		return this.antStud;
+	}
+
+	public String[] finnAlleNavn(){
+		int c = 0;
+		for (Student s:studenter){
+			if (s!=null){
+				c++;
+			}
+		}
+		String[] ut = new String[c];
+		c=0;
+		for (Student s:studenter){
+			if (s!=null){
+				ut[c]=s.getNavn();
+				c++;
+			}
+		}
+		return ut;
+	}
+
+	public int finnAntOppgaver(String n){
+		int r = 0;
+		for (Student s:studenter){
+			if (s!=null){
+				if (s.getNavn()==n){
+					r = s.getAntOppg();
+				}
+			}
+		}
+		return r;
+	}
+
+	public void økAntOppg(String navn,int nr){
+		for (Student s:studenter){
+			if (s!=null){
+				if (s.getNavn().equals(navn)){
+					s.setAntOppg(s.getAntOppg() + nr);
+				}
+			}
+		}
+	}
+
+	public void incrementBy5(){
+		Student[] nyTab = new Student[this.studenter.length + 5];
+		for (int i = 0; i < antStud; i++) {
+			nyTab[i] = this.studenter[i];
+		}
+		this.studenter = nyTab;
+	}
+	
+	@Override
+		public String toString(){
+			String ut = "";
+			for (Student s:studenter){
+				if (s!=null){
+					ut+=s.getNavn()+": "+s.getAntOppg()+"\n";
+				}
+			}
+		return ut;
+	}
+}
